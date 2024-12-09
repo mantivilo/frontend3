@@ -20,57 +20,54 @@ import java.util.List;
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    private TokenStore tokenStore;
+    private final TokenStore tokenStore;
+    private final RestTemplate restTemplate;
 
-    public CustomAuthenticationProvider(TokenStore tokenStore) {
-        super();
+    // Constructor con inyección de dependencias
+    public CustomAuthenticationProvider(TokenStore tokenStore, RestTemplate restTemplate) {
         this.tokenStore = tokenStore;
+        this.restTemplate = restTemplate;
     }
 
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
         System.out.println("Custom Authentication Provider Sent: ");
         System.out.println("Authentication: " + authentication);
+        
         final String name = authentication.getName();
-        System.out.println("Name: " + name);
         final String password = authentication.getCredentials().toString();
-        System.out.println("Password: " + password);
 
         System.out.println("Custom Authentication Provider: " + name);
-        //log.info("Login Success");
 
-
-        final MultiValueMap requestBody = new LinkedMultiValueMap<>();
+        // Crear el cuerpo de la solicitud
+        final MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
         requestBody.add("user", name);
         requestBody.add("encryptedPass", password);
 
         System.out.println("Request Body: " + requestBody);
 
-        final var restTemplate = new RestTemplate();
+        // Realizar la solicitud con RestTemplate
         final var responseEntity = restTemplate.postForEntity("http://localhost:8080/login", requestBody, String.class);
 
         System.out.println("Response Entity: " + responseEntity);
 
-        tokenStore.setToken(responseEntity.getBody());
-
-        System.out.println("Token Store: " + tokenStore.getToken());
-
-        if (responseEntity.getStatusCode() != HttpStatus.OK) {
+        // Guardar el token en el TokenStore
+        if (responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.getBody() != null) {
+            tokenStore.setToken(responseEntity.getBody());
+            System.out.println("Token Store: " + tokenStore.getToken());
+        } else {
             throw new BadCredentialsException("Invalid username or password");
         }
 
-        List authorities = new ArrayList<>();
+        // Configurar las autoridades
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-        Authentication authenticatedToken = new UsernamePasswordAuthenticationToken(name, password,
-                authorities);
-
-        return authenticatedToken;
-
+        return new UsernamePasswordAuthenticationToken(name, password, authorities);
     }
 
     @Override
-    public boolean supports(Class authentication) {
+    public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }
