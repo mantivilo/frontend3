@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Valorar Receta</title>
+</head>
+<body>
+    <h1>Valorar Receta</h1>
+    <form th:action="@{/recetas/{id}/guardarValoracion(id=${idReceta})}" method="post">
+        <input type="hidden" th:value="${idReceta}" name="id" />
+
+        <label for="valoracion">Valoración (1-5):</label>
+        <input type="number" id="valoracion" name="valoracion" min="1" max="5" required />
+
+        <label for="comentario">Comentario:</label>
+        <textarea id="comentario" name="comentario" rows="4" cols="50" required></textarea>
+
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>

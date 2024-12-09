@@ -1,0 +1,110 @@
+/* General Body Styles */
+body {
+    background: url('/images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+/* Header text styling */
+.display-4 {
+    font-weight: 700;
+}
+
+.lead {
+    font-weight: 300;
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header background for Recetas Populares */
+.card-header {
+    background-color: #28a745 !important; /* Match Ver Detalle buttons */
+    color: white !important; 
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Button styling for "Ver Detalle" */
+.btn-primary {
+    background-color: #28a745 !important; 
+    border-color: #28a745 !important; 
+}
+
+.btn-primary:hover {
+    background-color: #218838 !important; 
+    border-color: #1e7e34 !important; 
+}
+
+/* main headers */
+h1,h2 {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Container to center and limit width */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Banners Section Styles */
+.banners-section {
+    margin-bottom: 50px;
+}
+
+.banners img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.banners img:hover {
+    transform: scale(1.05);
+}
+
+div.card-header {
+    background-color: #28a745 !important;
+    color: white !important;
+}
+
+/* Add a border line after recipe titles */
+.list-group-item h5 {
+    border-bottom: 1px solid #ccc; /* Light gray border */
+    padding-bottom: 5px; /* Add some space below the text */
+    margin-bottom: 10px; /* Add space between the line and content */
+    text-align: center; /* Centers the title horizontally */
+    font-weight: bold; /* Keeps the font bold */
+}
+
+.list-group-item .d-flex {
+    margin-top: 10px;
+}
+
+p.lead {
+    font-weight: 600 !important; /* Makes the text slightly thicker */
+}
+
+.card-img-top {
+    border-radius: 8px; /* Round the corners of the images */
+    max-height: 250px; /* Limit the image height */
+    object-fit: cover; /* Ensure images are cropped properly */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.card-body {
+    background-color: #f8f9fa; /* Light background for the card text */
+    padding: 10px;
+}
+
+.alert {
+    margin-bottom: 15px;
+}
